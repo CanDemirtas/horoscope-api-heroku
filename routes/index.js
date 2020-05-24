@@ -5,10 +5,10 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
-const fetch = require("node-fetch");
 
 const baseDailyUrl = "https://www.kadinlarduysun.com/gunluk-burc-yorumlari"
 router.get('/horoscope', function (req, res, next) {
+  const fetch = require("node-fetch");
   const horoscopeName = req.query.name;
   const url = baseDailyUrl + ("/" + horoscopeName + "-burcu-gunluk-burc-yorumu").trim();
   const result = fetch(url)
