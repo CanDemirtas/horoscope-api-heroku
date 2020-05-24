@@ -9,8 +9,10 @@ module.exports = function (req, res, next) {
             const DOMParser = require('xmldom').DOMParser;
             const parser = new DOMParser();
             const htmlDocument = parser.parseFromString(text, "text/xml").getElementsByClassName("reading")[0];
-            console.log(htmlDocument.firstChild.innerHTML);
-            const response = res.json({ title: htmlDocument.childNodes[1].textContent, content: htmlDocument.childNodes[3].textContent });
+            const response = res.json([
+                { title: htmlDocument.childNodes[1].textContent, content: htmlDocument.childNodes[3].textContent },
+                { title: htmlDocument.childNodes[7].textContent, content: htmlDocument.childNodes[9].textContent + htmlDocument.childNodes[11].textContent },
+                { title: htmlDocument.childNodes[13].textContent, content: htmlDocument.childNodes[15].textContent }]);
             return response;
         })
         .catch((err) => console.log(err));
