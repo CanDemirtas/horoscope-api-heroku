@@ -1,8 +1,22 @@
 const baseUrl = "https://www.kadinlarduysun.com/gunluk-burc-yorumlari";
+const horoscopeList={
+    "aquarius":"kova",
+    "pisces":"balik",
+    "aries":"koc",
+    "taurus":"boga",
+    "gemini":"ikizler",
+    "cancer":"yengec",
+    "leo":"aslan",
+    "virgo":"basak",
+    "libra":"terazi",
+    "scorpio":"akrep",
+    "sagittarius":"yay",
+    "capricorn":"oglak",
+};
 module.exports = function (req, res, next) {
     const fetch = require("node-fetch");
     const horoscopeName = req.query.name;
-    const url = baseUrl + ("/" + horoscopeName + "-burcu-gunluk-burc-yorumu").trim();
+    const url = baseUrl + ("/" + horoscopeList[horoscopeName] + "-burcu-gunluk-burc-yorumu").trim();
     const result = fetch(url)
         .then((response) => response.text())
         .then((text) => {
