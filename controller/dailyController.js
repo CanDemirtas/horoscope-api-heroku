@@ -1,17 +1,17 @@
 const baseUrl = "https://www.kadinlarduysun.com/gunluk-burc-yorumlari";
-const horoscopeList={
-    "aquarius":"kova",
-    "pisces":"balik",
-    "aries":"koc",
-    "taurus":"boga",
-    "gemini":"ikizler",
-    "cancer":"yengec",
-    "leo":"aslan",
-    "virgo":"basak",
-    "libra":"terazi",
-    "scorpio":"akrep",
-    "sagittarius":"yay",
-    "capricorn":"oglak",
+const horoscopeList = {
+    "aquarius": "kova",
+    "pisces": "balik",
+    "aries": "koc",
+    "taurus": "boga",
+    "gemini": "ikizler",
+    "cancer": "yengec",
+    "leo": "aslan",
+    "virgo": "basak",
+    "libra": "terazi",
+    "scorpio": "akrep",
+    "sagittarius": "yay",
+    "capricorn": "oglak",
 };
 module.exports = function (req, res, next) {
     const fetch = require("node-fetch");
@@ -29,7 +29,7 @@ module.exports = function (req, res, next) {
                 { title: htmlDocument.childNodes[13].textContent, content: htmlDocument.childNodes[15].textContent }]);
             return response;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => { return res.json([{ title: "", content: "Sistemde hata oluştu. Daha sonra tekrar deneyiniz." }]) });
 
     if (result)
         return result;
