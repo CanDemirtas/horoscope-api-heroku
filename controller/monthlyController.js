@@ -25,7 +25,7 @@ module.exports = function (req, res, next) {
             const parser = new DOMParser();
             // const htmlDocument = parser.parseFromString(text, "text/xml").getElementsByClassName("standard-article-body--text")[0];
             const htmlContent = parser.parseFromString(text, "text/xml").getElementsByClassName("body-el-text standard-body-el-text");
-            const response = res.json({ title: "", content: htmlContent[1].textContent.replace(/&rsquo;/g, "'").replace(/\n/g, "") }
+            const response = res.json({ title: horoscopeList[horoscopeName][0].toUpperCase() + horoscopeList[horoscopeName].slice(1)+" Burcu Aylık Yorum", content: htmlContent[1].textContent.replace(/&rsquo;/g, "'").replace(/\n/g, "") }
             );
             return response;
         })
