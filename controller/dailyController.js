@@ -20,9 +20,15 @@ module.exports = function (req, res, next) {
     const fetch = require("node-fetch");
     const horoscopeName = req.query.name;
     const url = baseUrl + ("/" + horoscopeList[horoscopeName] + "-burcu-gunluk-burc-yorumu").trim();
-    if (cache["date" + horoscopeName] == new Date().toLocaleDateString("tr-TR")) {
+
+    const date = new Date();
+    if (cache["date" + horoscopeName] == date.toLocaleDateString("tr-TR") &&
+        !(Number(cache["lastUpdatedHour" + horoscopeName]) <= 10 && Number(cache["lastUpdatedMinutes" + horoscopeName]) <= 15 && date.getHours() >= 10 && date.getMinutes() >= 15)
+    ) {
+
         return res.json(cache["object" + horoscopeName]);
-    }
+    };
+
     const result = fetch(url)
         .then((response) => response.text())
         .then((text) => {
@@ -36,7 +42,9 @@ module.exports = function (req, res, next) {
 
             const response = res.json(jsonObject);
             cache["object" + horoscopeName] = jsonObject
-            cache["date" + horoscopeName] = new Date().toLocaleDateString("tr-TR")
+            cache["date" + horoscopeName] = date.toLocaleDateString("tr-TR")
+            cache["lastUpdatedHour" + horoscopeName] = date.getHours()
+            cache["lastUpdatedMinutes" + horoscopeName] = date.getMinutes()
             return response;
         })
         .catch((err) => { return res.json([{ title: "", content: "Sistemde hata oluştu. Daha sonra tekrar deneyiniz." }]) });

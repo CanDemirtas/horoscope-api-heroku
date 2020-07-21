@@ -24,6 +24,7 @@ module.exports = function (req, res, next) {
     const fetch = require("node-fetch");
     const horoscopeName = req.query.name;
     const url = baseUrl + ("/" + horoscopeList[horoscopeName] + "/yillik").trim();
+
     if (cache["date" + horoscopeName] == new Date().getFullYear()) {
         return res.json(cache["object" + horoscopeName]);
     }
@@ -38,6 +39,7 @@ module.exports = function (req, res, next) {
             const response = res.json(jsonObject);
             cache["object" + horoscopeName] = jsonObject
             cache["date" + horoscopeName] = new Date().getFullYear()
+
             return response;
         })
         .catch((err) => { return res.json({ title: "", content: "Sistemde hata oluştu. Daha sonra tekrar deneyiniz." }) });
