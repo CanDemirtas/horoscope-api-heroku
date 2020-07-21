@@ -20,8 +20,8 @@ module.exports = function (req, res, next) {
     const fetch = require("node-fetch");
     const horoscopeName = req.query.name;
     const url = baseUrl + ("/" + horoscopeList[horoscopeName] + "-burcu-gunluk-burc-yorumu").trim();
-    if (cache["date"] == new Date().toLocaleDateString("tr-TR")) {
-        return res.json(cache["object"]);
+    if (cache["date" + horoscopeName] == new Date().toLocaleDateString("tr-TR")) {
+        return res.json(cache["object" + horoscopeName]);
     }
     const result = fetch(url)
         .then((response) => response.text())
@@ -35,8 +35,8 @@ module.exports = function (req, res, next) {
                 { title: htmlDocument.childNodes[13].textContent, content: htmlDocument.childNodes[15].textContent }];
 
             const response = res.json(jsonObject);
-            cache["object"] = jsonObject
-            cache["date"] = new Date().toLocaleDateString("tr-TR")
+            cache["object" + horoscopeName] = jsonObject
+            cache["date" + horoscopeName] = new Date().toLocaleDateString("tr-TR")
             return response;
         })
         .catch((err) => { return res.json([{ title: "", content: "Sistemde hata oluştu. Daha sonra tekrar deneyiniz." }]) });

@@ -13,11 +13,11 @@ const horoscopeList = {
     "sagittarius": "yay",
     "capricorn": "oglak",
 };
-String.prototype.turkishToUpper = function(){
-	var string = this;
-	var letters = { "i": "İ", "ş": "Ş", "ğ": "Ğ", "ü": "Ü", "ö": "Ö", "ç": "Ç", "ı": "I" };
-	string = string.replace(/(([iışğüçö]))/g, function(letter){ return letters[letter]; })
-	return string.toUpperCase();
+String.prototype.turkishToUpper = function () {
+    var string = this;
+    var letters = { "i": "İ", "ş": "Ş", "ğ": "Ğ", "ü": "Ü", "ö": "Ö", "ç": "Ç", "ı": "I" };
+    string = string.replace(/(([iışğüçö]))/g, function (letter) { return letters[letter]; })
+    return string.toUpperCase();
 }
 const cache = {};
 
@@ -25,8 +25,8 @@ module.exports = function (req, res, next) {
     const fetch = require("node-fetch");
     const horoscopeName = req.query.name;
     const url = baseUrl + ("/" + horoscopeList[horoscopeName] + "/haftalik").trim();
-    if (cache["date"] == new Date().toLocaleDateString("tr-TR")) {
-        return res.json(cache["object"]);
+    if (cache["date" + horoscopeName] == new Date().toLocaleDateString("tr-TR")) {
+        return res.json(cache["object" + horoscopeName]);
     }
     const result = fetch(url)
         .then((response) => response.text())
@@ -38,8 +38,8 @@ module.exports = function (req, res, next) {
             const jsonObject = { title: horoscopeList[horoscopeName][0].turkishToUpper() + horoscopeList[horoscopeName].slice(1) + " Burcu Haftalık Yorum", content: htmlContent[2].childNodes[2].textContent.replace("&rsquo;", "") };
             const response = res.json(jsonObject);
 
-            cache["object"] = jsonObject
-            cache["date"] = new Date().toLocaleDateString("tr-TR")
+            cache["object" + horoscopeName] = jsonObject
+            cache["date" + horoscopeName] = new Date().toLocaleDateString("tr-TR")
             return response;
         })
         .catch((err) => { return res.json({ title: "", content: "Sistemde hata oluştu. Daha sonra tekrar deneyiniz." }) });
