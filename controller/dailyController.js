@@ -13,8 +13,8 @@ const horoscopeList = {
     "sagittarius": "yay",
     "capricorn": "oglak",
 };
-const cache = {};
 
+const cache = {};
 
 module.exports = function (req, res, next) {
     const fetch = require("node-fetch");

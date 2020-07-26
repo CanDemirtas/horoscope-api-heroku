@@ -4,8 +4,10 @@ const dailyController = require('../controller/dailyController');
 const weeklyController = require('../controller/weeklyController');
 const monthlyController = require('../controller/monthlyController');
 const yearlyController = require('../controller/yearlyController');
+const dailyStatusController = require('../controller/dailyStatusController');
 
 router.get('/daily', dailyController);
+router.get('/dailyStatus', dailyStatusController);
 router.get('/weekly', weeklyController);
 router.get('/monthly', monthlyController);
 router.get('/yearly', yearlyController);
