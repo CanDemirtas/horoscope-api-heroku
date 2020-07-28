@@ -23,7 +23,7 @@ module.exports = function (req, res, next) {
 
     const date = new Date();
     if (cache["date" + horoscopeName] == date.toLocaleDateString("tr-TR") &&
-        !(Number(cache["lastUpdatedHour" + horoscopeName]) <= 12 && Number(cache["lastUpdatedMinutes" + horoscopeName]) <= 45 && date.getHours() >= 12 && date.getMinutes() >= 45)
+        !(Number(cache["lastUpdatedHour" + horoscopeName]) <= 13 && Number(cache["lastUpdatedMinutes" + horoscopeName]) <= 15 && date.getHours() >= 13 && date.getMinutes() >= 15)
     ) {
 
         return res.json(cache["object" + horoscopeName]);
