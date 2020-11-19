@@ -1,4 +1,7 @@
-const baseUrl = "https://www.kadinlarduysun.com/gunluk-burc-yorumlari";
+// const baseUrl = "https://www.kadinlarduysun.com/gunluk-burc-yorumlari";
+
+
+const baseUrl ="https://www.kadinlarduysun.com/gunluk-burc-yorumlari"
 const horoscopeList = {
     "aquarius": "kova",
     "pisces": "balik",
@@ -37,8 +40,8 @@ module.exports = function (req, res, next) {
             const htmlDocument = parser.parseFromString(text, "text/html").getElementsByClassName("reading")[0];
             const jsonObject = [
                 { title: htmlDocument.childNodes[1].textContent, content: htmlDocument.childNodes[3].textContent },
-                { title: htmlDocument.childNodes[7].textContent, content: htmlDocument.childNodes[9].textContent + htmlDocument.childNodes[11].textContent },
-                { title: htmlDocument.childNodes[13].textContent, content: htmlDocument.childNodes[15].textContent }];
+                { title: htmlDocument.childNodes[7].textContent, content: htmlDocument.childNodes[9].textContent  },
+                { title: htmlDocument.childNodes[11].textContent, content: htmlDocument.childNodes[13].textContent }];
 
             const response = res.json(jsonObject);
             cache["object" + horoscopeName] = jsonObject
