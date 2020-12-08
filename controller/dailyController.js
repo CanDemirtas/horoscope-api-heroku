@@ -1,7 +1,7 @@
 // const baseUrl = "https://www.kadinlarduysun.com/gunluk-burc-yorumlari";
 
 
-const baseUrl ="https://www.kadinlarduysun.com/gunluk-burc-yorumlari"
+const baseUrl = "https://www.kadinlarduysun.com/gunluk-burc-yorumlari"
 const horoscopeList = {
     "aquarius": "kova",
     "pisces": "balik",
@@ -39,9 +39,9 @@ module.exports = function (req, res, next) {
             const parser = new DOMParser();
             const htmlDocument = parser.parseFromString(text, "text/html").getElementsByClassName("reading")[0];
             const jsonObject = [
-                { title: htmlDocument.childNodes[1].textContent, content: htmlDocument.childNodes[3].textContent },
-                { title: htmlDocument.childNodes[7].textContent, content: htmlDocument.childNodes[9].textContent  },
-                { title: htmlDocument.childNodes[11].textContent, content: htmlDocument.childNodes[13].textContent }];
+                { title: htmlDocument.childNodes[0].textContent, content: htmlDocument.childNodes[1].textContent.split("–")[1] },
+                { title: htmlDocument.childNodes[3].textContent, content: htmlDocument.childNodes[4].textContent.split("–")[1] },
+                { title: htmlDocument.childNodes[5].textContent, content: htmlDocument.childNodes[6].textContent.split("–")[1] }];
 
             const response = res.json(jsonObject);
             cache["object" + horoscopeName] = jsonObject
@@ -50,7 +50,7 @@ module.exports = function (req, res, next) {
             cache["lastUpdatedMinutes" + horoscopeName] = date.getMinutes()
             return response;
         })
-        .catch((err) => { return res.json([{ title: "", content: "Sistemde hata oluştu. Daha sonra tekrar deneyiniz." }]) });
+        .catch((err) => { return res.json([{ title: "", content: "Sistemde hata oluştu. Daha sonra tekrar deneyiniz." }, { title: "", content: "Sistemde hata oluştu. Daha sonra tekrar deneyiniz." }, { title: "", content: "Sistemde hata oluştu. Daha sonra tekrar deneyiniz." }]) });
 
     if (result)
         return result;
