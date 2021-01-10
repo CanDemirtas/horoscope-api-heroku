@@ -40,7 +40,7 @@ module.exports = function (req, res, next) {
             const parser = new DOMParser();
             // const htmlDocument = parser.parseFromString(text, "text/xml").getElementsByClassName("standard-article-body--text")[0];
             const htmlContent = parser.parseFromString(text, "text/xml").getElementsByClassName("body-el-text standard-body-el-text");
-            const jsonObject = { title: horoscopeList[horoscopeName][0].turkishToUpper() + horoscopeList[horoscopeName].slice(1) + " Burcu Haftalık Yorum", content: htmlContent[2].childNodes[1].textContent.replaceAll("&rsquo;", "'").replaceAll("&ouml;", "ö").replaceAll("&uuml;", "ü").replaceAll("&ccedil;", "ç") };
+            const jsonObject = { title: horoscopeList[horoscopeName][0].turkishToUpper() + horoscopeList[horoscopeName].slice(1) + " Burcu Haftalık Yorum", content: htmlContent[2].childNodes[2].textContent.replaceAll("&rsquo;", "'").replaceAll("&ouml;", "ö").replaceAll("&uuml;", "ü").replaceAll("&ccedil;", "ç") };
             const response = res.json(jsonObject);
 
             cache["object" + horoscopeName] = jsonObject
