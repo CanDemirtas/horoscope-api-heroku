@@ -25,10 +25,7 @@ module.exports = function (req, res, next) {
     const url = baseUrl + ("/" + horoscopeList[horoscopeName] + "-burcu-gunluk-burc-yorumu").trim();
 
     const date = new Date();
-    if (cache["date" + horoscopeName] == date.toLocaleDateString("tr-TR") &&
-        !(Number(cache["lastUpdatedHour" + horoscopeName]) <= 13 && Number(cache["lastUpdatedMinutes" + horoscopeName]) <= 10 && date.getHours() >= 13 && date.getMinutes() >= 10)
-    ) {
-
+    if (cache["date" + horoscopeName] == date.toLocaleDateString("tr-TR") && Number(cache["lastUpdatedHour" + horoscopeName]) == date.getHours()) {
         return res.json(cache["object" + horoscopeName]);
     };
 
@@ -44,10 +41,10 @@ module.exports = function (req, res, next) {
                 { title: htmlDocument.childNodes[5].textContent, content: htmlDocument.childNodes[6].textContent.split("–")[1] }];
 
             const response = res.json(jsonObject);
-            cache["object" + horoscopeName] = jsonObject
-            cache["date" + horoscopeName] = date.toLocaleDateString("tr-TR")
-            cache["lastUpdatedHour" + horoscopeName] = date.getHours()
-            cache["lastUpdatedMinutes" + horoscopeName] = date.getMinutes()
+            cache["object" + horoscopeName] = jsonObject;
+            cache["date" + horoscopeName] = date.toLocaleDateString("tr-TR");
+            cache["lastUpdatedHour" + horoscopeName] = date.getHours();
+
             return response;
         })
         .catch((err) => { return res.json([{ title: "", content: "Sistemde hata oluştu. Daha sonra tekrar deneyiniz." }, { title: "", content: "Sistemde hata oluştu. Daha sonra tekrar deneyiniz." }, { title: "", content: "Sistemde hata oluştu. Daha sonra tekrar deneyiniz." }]) });
