@@ -36,9 +36,9 @@ module.exports = function (req, res, next) {
             const parser = new DOMParser();
             const htmlDocument = parser.parseFromString(text, "text/html").getElementsByClassName("reading")[0];
             const jsonObject = [
-                { title: htmlDocument.childNodes[0].textContent, content: htmlDocument.childNodes[1].textContent.split("–")[1] },
-                { title: htmlDocument.childNodes[3].textContent, content: htmlDocument.childNodes[4].textContent.split("–")[1] },
-                { title: htmlDocument.childNodes[5].textContent, content: htmlDocument.childNodes[6].textContent.split("–")[1] }];
+                { title: htmlDocument.childNodes[1].textContent, content: htmlDocument.childNodes[2].textContent.split("–")[1] },
+                { title: htmlDocument.childNodes[4].textContent, content: htmlDocument.childNodes[5].textContent.split("–")[1] },
+                { title: htmlDocument.childNodes[6].textContent, content: htmlDocument.childNodes[7].textContent.split("–")[1] }];
 
             const response = res.json(jsonObject);
             cache["object" + horoscopeName] = jsonObject;
