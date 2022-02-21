@@ -1,7 +1,7 @@
 // const baseUrl = "https://www.kadinlarduysun.com/gunluk-burc-yorumlari";
 
 
-const baseUrl = "https://www.kadinlarduysun.com/gunluk-burc-yorumlari"
+const baseUrl = "https://hthayat.haberturk.com/astroloji/index"
 const horoscopeList = {
     "aquarius": "kova",
     "pisces": "balik",
@@ -22,7 +22,7 @@ const cache = {};
 module.exports = function (req, res, next) {
     const fetch = require("node-fetch");
     const horoscopeName = req.query.name;
-    const url = baseUrl + ("/" + horoscopeList[horoscopeName] + "-burcu-gunluk-burc-yorumu").trim();
+    const url = baseUrl + ("/" + horoscopeList[horoscopeName]).trim();
 
     const date = new Date();
     if (cache["date" + horoscopeName] == date.toLocaleDateString("tr-TR") && Number(cache["lastUpdatedHour" + horoscopeName]) == date.getHours()) {
@@ -34,11 +34,12 @@ module.exports = function (req, res, next) {
         .then((text) => {
             const DOMParser = require('xmldom').DOMParser;
             const parser = new DOMParser();
-            const htmlDocument = parser.parseFromString(text, "text/html").getElementsByClassName("reading")[0];
+            const htmlDocument = parser.parseFromString(text, "text/html").getElementsByClassName("widget-horoscope-today")[0];
             const jsonObject = [
-                { title: htmlDocument.childNodes[1].textContent, content: htmlDocument.childNodes[2].textContent.split("–")[1] },
-                { title: htmlDocument.childNodes[3].textContent, content: htmlDocument.childNodes[4].textContent.split("–")[1] },
-                { title: htmlDocument.childNodes[5].textContent, content: htmlDocument.childNodes[6].textContent.split("–")[1] }];
+                { title: htmlDocument.childNodes[3].childNodes[1].childNodes[0].textContent+" "+ horoscopeList[horoscopeName].charAt(0).toUpperCase() + horoscopeList[horoscopeName].slice(1), content: htmlDocument.childNodes[3].childNodes[3].childNodes[1].textContent },
+                { title: "", content:"" },
+                { title: "", content:"" }
+            ];
 
             const response = res.json(jsonObject);
             cache["object" + horoscopeName] = jsonObject;
